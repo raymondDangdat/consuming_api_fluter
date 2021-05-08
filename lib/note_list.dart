@@ -56,7 +56,8 @@ class _NoteListState extends State<NoteList> {
             }if(_apiResponse.error){
               return Center(child: Text(_apiResponse.errorMessage),);
             }
-            return ListView.separated(itemBuilder: (_, index){
+            return ListView.separated(
+                itemBuilder: (_, index){
               final note = _apiResponse.data[index];
               return Dismissible(
                 key: ValueKey(note.noteID),
