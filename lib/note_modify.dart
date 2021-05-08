@@ -85,11 +85,18 @@ class _NoteModifyState extends State<NoteModify> {
               child: ElevatedButton(
                   onPressed: () async{
                     if(isEditing){
+                      setState(() {
+                        _isLoading = true;
+                      });
                       final note = NoteManipulation(noteContent: _contentController.text, noteTitle: _titleController.text);
                       final result =  await notesService.updateNote(widget.noteId, note);
 
                       final title = 'Done';
                       final text = result.error ? (result.errorMessage ?? 'An error occurred')  : 'Your note was updated';
+
+                      setState(() {
+                        _isLoading = false;
+                      });
 
                       showDialog(
                           context: context,
@@ -108,11 +115,18 @@ class _NoteModifyState extends State<NoteModify> {
                         }
                       });
                     }else{
+                      setState(() {
+                        _isLoading = true;
+                      });
                       final note = NoteManipulation(noteContent: _contentController.text, noteTitle: _titleController.text);
                       final result =  await notesService.createNote(note);
 
                       final title = 'Done';
                       final text = result.error ? (result.errorMessage ?? 'An error occurred')  : 'Your note was created';
+
+                      setState(() {
+                        _isLoading = false;
+                      });
 
                       showDialog(
                         context: context,
